@@ -87,7 +87,8 @@
   
   .feature-item {
     text-align: center;
-    width: 20%;
+    width: 30%;
+    margin: 0 50px
   }
   
   .feature-item img {
