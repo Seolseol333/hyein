@@ -4,6 +4,7 @@ import Home from './pages/Home/Home';
 import Login from './components/Login/Login';
 import SignUp from './components/SignUp/SignUp';
 import Dashboard from './pages/Dashboard/Dashboard';
+import Assignment from './pages/Assignment/Assignment';
 import './App.css';
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/Assignment" element={<Assignment />} />
         </Routes>
       </div>
     </Router>
