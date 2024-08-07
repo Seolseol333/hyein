@@ -1,12 +1,13 @@
 import './Assignment.css';
 import React, { useState } from 'react';
 import { IoMenu, IoAddCircle, IoPerson, IoBookmark } from "react-icons/io5";
-import { Link } from 'react-router-dom';
 
 function Assignment() {
     const [namePlaceholder, setNamePlaceholder] = useState('과제명을 적어주세요');
     const [textPlaceholder, setTextPlaceholder] = useState('과제의 상세 설명을 적어주세요');
     const [formData, setFormData] = useState('');
+    const [sidebarOpen, setSidebarOpen] = useState(false);
+
     
     const handleFocus = (field) => {
         if (field==='name') {
@@ -14,32 +15,32 @@ function Assignment() {
         } else if (field==='text') {
             setTextPlaceholder('');
         }
-        
     };
+
     
     const handleBlur = (field) => {
-        if (field === 'name' && formData.name === '') {
+        if (field === 'name' && (!formData.name || formData.name.trim() === '')) {
             setNamePlaceholder('과제의 상세 설명을 적어주세요');
-        } else if (field === 'text' && formData.text === '') {
-            setTextPlaceholder('과제의 상세 설명을 적어주세요')
-        }
+        } else if (field === 'text' && (!formData.text || formData.text.trim() === '')) {
+            setTextPlaceholder('과제의 상세 설명을 적어주세요');
+        } 
     };
     
     const handleChange = (event) => {
         const { name, value } = event.target;
-        setFormData({
-            ...formData,
+        setFormData((prevFormData) => ({
+            ...prevFormData,
             [name]: value
-        });
+          }));
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const formData = {
+        const submittedData = {
             ...formData,
             deadline: formData.deadline || '미정'
           };
-        console.log('Submitted:', formData);
+        console.log(submittedData);
         setFormData({
             name:'',
             text:'',
@@ -50,6 +51,10 @@ function Assignment() {
         });
     };
 
+    const toggleSidebar = () => {
+        setSidebarOpen(!sidebarOpen);
+    };
+
     return (
         <div className="Assignment">
             <header className="Assignment-header">
@@ -58,8 +63,17 @@ function Assignment() {
                 <a href="/mypage">마이페이지</a> | <a href="/logout">로그아웃</a>
                 </div>
             </header>
+            <button className="sidebar-toggle" onClick={toggleSidebar}>
+                <IoMenu size={24} />
+            </button>
+            <aside className={`App-sidebar ${sidebarOpen ? 'open' : ''}`}>
+                <div className="sidebar-content">
+                    <p>aa</p>
+                </div>
+            </aside>
             <main>
                 <div className="Assignment-content">
+                    <div className="white-box"></div>
                     <div>
                         <form className="As-create-form" onSubmit={handleSubmit}>
                             <div className="setting-list">
@@ -69,7 +83,7 @@ function Assignment() {
                                 value={formData.role}
                                 onChange={handleChange}
                                 >
-                                    <option value="미정" disabled>담당자</option>
+                                    <option value="미정">담당자</option>
                                     <option value="참여자1">1</option> {/*이부분 나중에 팀원 입력했을 때의 입력값이 뜨도록 해야함*/}
                                 </select>
                                 <select 
@@ -78,7 +92,7 @@ function Assignment() {
                                 value={formData.type}
                                 onChange={handleChange}
                                 >
-                                    <option value="미정" disabled>과제분류</option> {/*이부분도 분류 대강 짠 다음에 추가해야함*/}
+                                    <option value="미정">과제분류</option> {/*이부분도 분류 대강 짠 다음에 추가해야함*/}
                                 </select>
                                 <select 
                                 id='diff'
@@ -86,9 +100,10 @@ function Assignment() {
                                 value={formData.diff}
                                 onChange={handleChange}
                                 >
-                                    <option value="미정" disabled>과제 복잡도</option>
+                                    <option value="미정">과제 복잡도</option>
                                     <option value="간단함">간단함</option>
                                     <option value="복잡함">복잡함</option>
+                                    
                                 </select>
                                 <input 
                                 type='date'
@@ -99,7 +114,7 @@ function Assignment() {
                                 />
                             </div>
                             <div className="As-name">
-                                <input
+                                <textarea
                                 type="text"
                                 value={formData.name}
                                 placeholder={namePlaceholder}
@@ -110,7 +125,7 @@ function Assignment() {
                                 />
                             </div>
                             <div className="As-text">
-                                <input
+                                <textarea
                                 type="text"
                                 value={formData.text}
                                 placeholder={textPlaceholder}
@@ -124,14 +139,14 @@ function Assignment() {
                         </form>
                         <div className="Assignment-look">
                             <div className="my-assignment">
-                                <h6>내 과제 보기</h6>
+                                <h3>내 과제 보기</h3>
                                 <div className="my-as-item">
                                     <p>과제 이름</p>
                                 </div>
 
                             </div>
                             <div className="all-assignment">
-                                <h6>전체 과제 보기</h6>
+                                <h3>전체 과제 보기</h3>
                                 <div className='all-as-item'>
                                     <p>과제 이름</p>
                                 </div>
@@ -140,7 +155,7 @@ function Assignment() {
                         </div>
                     </div>
                     <div className="comment">
-                        <h6>최신 댓글 알림</h6>
+                        <h3>최신 댓글 알림</h3>
                     </div>
                 </div>
             </main>

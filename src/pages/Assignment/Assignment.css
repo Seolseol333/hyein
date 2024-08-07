@@ -67,70 +67,167 @@ body {
         align-items: center;
     }
 
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;}
+
     .Assignment-content {
         display: flex;
+        flex-direction: row;
         justify-content: space-around;
+        align-items: center;
+        flex-grow: 1;
+        padding: 1em;
+        margin-top: 10px;
+        text-align: center;
+    }
+
+    .white-box {
+        display:flex;
+        width:310px;
+        background-color: white;
     }
 
     .comment {
-        display: block;
-        margin: 100px;
+        width: 300px;
+        height:600px;
+        display: flex;
+        flex-direction: column;
+        margin-top: 5px;
+        margin-right: 10px;
+        padding: 1em 1em;
         background-color: #f8f8f8;
+        
+        text-align: center;
         stroke: #A32125;
-        color: black;
+        color: rgb(82, 82, 82);
     }
 
+
     .As-create-form {
-        margin: 100px;
-        background-color: white
-        stroke #A32125;
+        margin-top: 80px;
+        margin-right: 60px;
+        margin-left: 60px;
+        width: 800px;
+        display: flex;
+        flex-direction: column;
+        border-style: none;
+
     }
 
     .setting-list {
+        
         display: flex;
-        justify-content: space-around;
+        
+        flex-direction: row;
     }
 
     .setting-list select {
-        background-color:#A32125
+        background-color:#ececec;
+        width: 90px;
+        height: 30px;
+        margin-right: 5px;
+        border-width: 2px;
+        border-radius: 5px;
+        text-align: center;
+
+
     }
 
     .setting-list input {
-        background-color:#f8f8f8
+        background-color:#ececec;
+        width: 130px;
+        height: 30px;
+        text-align: center;
+        border-radius: 5px;
+        border-style: solid;
+        border-width: 2px;
     }
 
-    .As-name {
-        stroke:#A32125
+    .As-name textarea{
+        border: #970005;
+        border-style: solid;
+        margin-top: 5px;
+        padding-top: 15px;
+        padding-left: 25px;
+        width: 800px;
+        border-radius: 5px;
+        height:50px;
+        resize: none;
     }
 
-    .As-text {
-        stroke:#A32125
+    .As-text textarea{
+        border: #970005;
+        border-style: solid;
+        margin-bottom: 5px;
+        padding-top: 15px;
+        padding-left: 25px;
+        width: 800px;
+        height: 100px;
+        border-radius: 5px;
+        resize: none;
+        overflow: auto;
+        word-wrap: break-word;
+        white-space: pre-wrap;
+
     }
+
 
     .As-create-form button {
-        justify-content: right;
-        background-color: #ffcdcf;
+        width: 100px;
+        padding: 10px;
+        margin-left: auto;
+        text-align: center;
+        font-weight: bold;
+        border-radius: 5px;
+        background-color: #970005;
+        color: white;
+        border-style: none;
     }
     
     .Assignment-look {
+        width: 920px;
         display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-top: 30px;
+        padding-top: 20px;
+        text-align: center;
     }
 
     .my-assignment {
-        background-color:#f8f8f8
-    }
-
-    .my-as-item {
-        background-color: #A32125;
-        stroke: black;
-        color: black;
+        background-color:#f8f8f8;
+        margin-right:30px;
+        margin-left: 30px;
+        width: 400px;
+        height: 500px;
+        border-radius: 10px;
+        
+        
     }
 
     .all-assignment {
-        background-color:#f8f8f8
+        background-color:#f8f8f8;
+        margin-left:30px;
+        margin-right: 30px;
+        width: 400px;
+        height: 500px;
+        border-radius: 10px;
     }
 
-    .all-as-item {
-        background-color: #f8f8f8;
+    .my-as-item, .all-as-item {
+        background-color: #ffffff;
+        border-radius: 5px;
+        color: black;
+        width: 350px;
+        
+        margin-right: 25px;
+        margin-left: 25px;
+        height: 40px;
+        
     }
+
+
+
 
