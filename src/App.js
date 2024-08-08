@@ -5,7 +5,9 @@ import Login from './components/Login/Login';
 import SignUp from './components/SignUp/SignUp';
 import Dashboard from './pages/Dashboard/Dashboard';
 import Assignment from './pages/Assignment/Assignment';
+import AssignmentDetail from './pages/AssignmentDetail/AssignmentDetail';
 import './App.css';
+
 
 function App() {
   return (
@@ -17,6 +19,7 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/Assignment" element={<Assignment />} />
+          <Route path="/AssignmentDetail" element={<AssignmentDetail />} />
         </Routes>
       </div>
     </Router>
