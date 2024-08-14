@@ -10,6 +10,14 @@ import './App.css';
 
 
 function App() {
+  const notifications = [
+    {nickname: '닉네임', comment: '새 댓글'},
+    {nickname: '닉네임', comment: '다른 댓글',}
+  ];
+  const handleFormSubmit = (formData) => {
+    console.log('Form submitted:', formData);
+  }
+
   return (
     <Router>
       <div className="App">
@@ -18,7 +26,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/Assignment" element={<Assignment />} />
+          <Route path="/Assignment" element={<Assignment onSubmit={handleFormSubmit} currentUser="1" notifications={notifications}/>} />
           <Route path="/AssignmentDetail" element={<AssignmentDetail />} />
         </Routes>
       </div>

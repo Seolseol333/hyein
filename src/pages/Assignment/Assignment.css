@@ -72,54 +72,26 @@ body {
     *::after {
         box-sizing: border-box;}
 
-    .Assignment-content {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-around;
-        align-items: center;
-        flex-grow: 1;
-        padding: 1em;
-        margin-top: 10px;
-        text-align: center;
-    }
-
-    .white-box {
-        display:flex;
-        width:310px;
-        background-color: white;
-    }
-
-    .comment {
-        width: 300px;
-        height:600px;
+    .center-content {
         display: flex;
         flex-direction: column;
-        margin-top: 5px;
-        margin-right: 10px;
-        padding: 1em 1em;
-        background-color: #f8f8f8;
-        
-        text-align: center;
-        stroke: #A32125;
-        color: rgb(82, 82, 82);
+        align-items: center;
+        margin-top: 20px;
     }
-
 
     .As-create-form {
         margin-top: 80px;
-        margin-right: 60px;
-        margin-left: 60px;
         width: 800px;
         display: flex;
         flex-direction: column;
         border-style: none;
+        align-items: center;
 
     }
 
     .setting-list {
-        
         display: flex;
-        
+        margin-right: auto;
         flex-direction: row;
     }
 
@@ -137,7 +109,8 @@ body {
 
     .setting-list input {
         background-color:#ececec;
-        width: 130px;
+        max-width: 130px;
+        width: 80%;
         height: 30px;
         text-align: center;
         border-radius: 5px;
@@ -145,28 +118,31 @@ body {
         border-width: 2px;
     }
 
-    .As-name textarea{
-        border: #970005;
-        border-style: solid;
-        margin-top: 5px;
+    .container {
+        display: flex;
+        justify-content: center;
+        gap: 5px;
+        flex-direction: column;
+    }
+
+    .As-title textarea, .As-detail textarea {
+        border: 1.5px solid #970005;
         padding-top: 15px;
         padding-left: 25px;
         width: 800px;
         border-radius: 5px;
-        height:50px;
+        box-sizing: border-box;
         resize: none;
     }
 
-    .As-text textarea{
-        border: #970005;
-        border-style: solid;
+    .As-title textarea {
+        margin-top: 5px;
+        height:50px;
+    }
+
+    .As-detail textarea {
         margin-bottom: 5px;
-        padding-top: 15px;
-        padding-left: 25px;
-        width: 800px;
         height: 100px;
-        border-radius: 5px;
-        resize: none;
         overflow: auto;
         word-wrap: break-word;
         white-space: pre-wrap;
@@ -216,17 +192,18 @@ body {
         border-radius: 10px;
     }
 
-    .my-as-item, .all-as-item {
-        background-color: #ffffff;
-        border-radius: 5px;
-        color: black;
-        width: 350px;
-        
-        margin-right: 25px;
-        margin-left: 25px;
-        height: 40px;
-        
+    .look-item {
+        border: 1px solid gray;
+        background-color: #f0f0f0;
+        padding: 10px;
+        margin-bottom: 10px;
     }
+
+    .look-item.past-deadline {
+        border-color: red;
+    }
+
+    
 
 
 
