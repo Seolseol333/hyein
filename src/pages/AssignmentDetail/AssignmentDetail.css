@@ -73,36 +73,46 @@ body {
         box-sizing: border-box;
     }
 
-    .As-detail main {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-around;
-        align-items: center;
+    .container {
+        max-width: 1000px;
+        width: 100vw;
     }
 
     .view {
-        width: 100vh;
-        display: flex;
+        margin-right: auto;
         flex-direction: row;
-        justify-content: space-around;
+        justify-content:flex-start;
         align-items: center;
-
+        margin-top: 100px;
+        display: flex;
     }
 
     .inform {
         display: flex;
         flex-direction: column;
-        padding: 20px;
+        padding: 3em;
+        margin-left: 3vw;
+        min-width: 250px;
     }
 
-    .substance h2, .substance p {
+    .substance {
+       padding: 2em;
+       margin-right:auto;
+       margin-left: auto;
+    }
+
+    .substance h2{
         padding: 10px;
     }
 
-    .white-box {
-        display: flex;
-        width: 310px;
+    .substance p {
+        width: 60vw;
+        border-color: #A32125;
+        border-radius: 5px;
+        border-style: solid;
+        padding: 3em;
     }
+
 
     .editable-post {
         background-color: #f0f0f0;
@@ -111,11 +121,23 @@ body {
         width: 500px;
         margin: 20px auto;
     }
-      
-    .editable-post .setting {
+    
+    .edit {
+        margin-right: auto;
+        flex-direction: column;
+        justify-content:flex-start;
+        align-items: center;
+        margin-top: 100px;
         display: flex;
-        justify-content: space-between;
-        margin-bottom: 10px;
+    }
+
+    .setting {
+        flex-direction: row;
+        display: flex;
+    }
+
+    .text-input {
+        
     }
       
     .editable-post .setting select,
@@ -139,11 +161,11 @@ body {
       
     .editable-post .button-row {
         display: flex;
-        justify-content: flex-end;
+        
     }
       
     .editable-post button {
         padding: 5px 10px;
-        margin-left: 10px;
+        margin-right: auto;
     }
       

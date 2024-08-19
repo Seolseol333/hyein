@@ -68,10 +68,10 @@ function AssignmentDetail() {
                     <p>aa</p>
                 </div>
             </aside>
-            <main>
+            <div className="container">
                 <div editable-post>
                     {isEditing ? (
-                        <div>
+                        <div className="edit">
                             <div className="setting">
                                 <select 
                                 name="role" 
@@ -141,13 +141,13 @@ function AssignmentDetail() {
                     ) : (
                         <div className="view">
                             
-                            <div className="inform">
+                            <aside className="inform">
                                 <h3>과제 상태:</h3>
                                 <p>담당자: {dropdownValues.dropdown1}</p>
                                 <p>과제분류: {dropdownValues.dropdown2}</p>
                                 <p>과제복잡도: {dropdownValues.dropdown3}</p>
                                 <p>마감기한: {deadline ? new Date(deadline).toLocaleDateString() : '미정'}</p>
-                            </div>
+                            </aside>
                             <div className="substance">
                                 <h2>{title}</h2>
                                 <p>{content}</p>
@@ -171,15 +171,13 @@ function AssignmentDetail() {
                                     <button onClick={handleDelete}>삭제</button>
                                 </div>
                             </div>
-                            <div className="comment">
-                                <p>댓글 입력</p>
-                            </div>
+                            
                         </div>
                         )}
                 </div>
                 
 
-            </main>
+            </div>
         </div>
         
     );
