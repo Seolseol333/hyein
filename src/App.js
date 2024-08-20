@@ -28,6 +28,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/Assignment" element={<Assignment onSubmit={handleFormSubmit} currentUser="1" notifications={notifications}/>} />
           <Route path="/AssignmentDetail" element={<AssignmentDetail />} />
+          <Route path="/MeetingLog" element={<MeetingLog />} />
         </Routes>
       </div>
     </Router>

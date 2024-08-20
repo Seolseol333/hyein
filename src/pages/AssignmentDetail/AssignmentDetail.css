@@ -137,7 +137,7 @@ body {
     }
 
     .text-input {
-        
+        display: flex;
     }
       
     .editable-post .setting select,
