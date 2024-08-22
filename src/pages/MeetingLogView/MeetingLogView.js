@@ -20,9 +20,9 @@ const MeetingLogView = () => {
     fetchMeetingLog();
   }, [date]);
 
-  if (!meetingLog) {
+  /*if (!meetingLog) {
     return <div>Loading...</div>;
-  }
+  }*/
 
   return (
     <div>
