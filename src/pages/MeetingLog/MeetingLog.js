@@ -51,7 +51,7 @@ function MeetingLog() {
 
       return (
         <div>
-          <header className="MettingLog-header">
+          <header className="header">
                 <div className="my-page-logout">
                 <IoPerson size={24} />
                 <a href="/mypage">마이페이지</a> | <a href="/logout">로그아웃</a>
@@ -84,12 +84,14 @@ function MeetingLog() {
           </button>
           <div>
             <p>녹음본 텍스트</p>
+            {/*녹음본 텍스트랑 이용자가 직접 회의내용 입력하는 부분을 가로 배치하는 걸로 생각하고 있는데 어떻게 생각하는지? 
+            - 아니면 기록할 때는 이 부분은 안보이고 이후에 기록한 걸 확인하는 창에서는 가로 배치로 보이게끔?*/}
             <textarea value={recordingText} readOnly />
           </div>
           <div>
             <h1>회의 제목</h1>
             <p>직접 입력</p>
-            <div>여기에 api 받아오기</div>
+            <div>여기에 실시간 수정 api 받아오기</div>
           </div>
           <div>
             {recordedFiles.map((file, index) => (
