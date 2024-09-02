@@ -51,21 +51,21 @@ function MeetingLog() {
 
       return (
         <div>
-          <header className="header">
-                <div className="my-page-logout">
-                <IoPerson size={24} />
-                <a href="/mypage">마이페이지</a> | <a href="/logout">로그아웃</a>
-                </div>
-            </header>
-            <button className="sidebar-toggle" onClick={toggleSidebar}>
-                <IoMenu size={24} />
-            </button>
-            <aside className={`App-sidebar ${sidebarOpen ? 'open' : ''}`}>
-                <div className="sidebar-content">
-                    <p>aa</p>
-                </div>
-            </aside>
-            {/*녹음 버튼 누르면 녹음 기능 켜짐
+          <header>
+            <div className="my-page-logout">
+            <IoPerson size={24} />
+            <a href="/mypage">마이페이지</a> | <a href="/logout">로그아웃</a>
+            </div>
+          </header>
+          <button className="sidebar-toggle" onClick={toggleSidebar}>
+            <IoMenu size={24} />
+          </button>
+          <aside className={`App-sidebar ${sidebarOpen ? 'open' : ''}`}>
+            <div className="sidebar-content">
+                <p>aa</p>
+            </div>
+          </aside>
+          {/*녹음 버튼 누르면 녹음 기능 켜짐
             녹음 버튼 눌렀을 때 아이콘 변화, 녹음 버튼 끄면 녹음 저장
             녹음을 여러번 할 수도 있으니까 여러번 누적 저장도 고려해야힘
             회의록 작성 완료 누를 때 녹음본을 저장하시겠습니까? 팝업창 띄워줌
