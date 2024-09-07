@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {useNavigate} from "react-router-dom";
 import { IoMenu, IoPerson,IoMicSharp, IoRecordingOutline  } from "react-icons/io5";
-
+import ParticipantSelector from '../components/ParticipantSelector';
 
 function MeetingLog() {
     
@@ -49,6 +49,42 @@ function MeetingLog() {
         window.location.href = '/schedule';
       };
 
+      const [participants, setParticipants] = useState([]);
+      const fetchMockParticipants = async () => {
+        const mockData = [
+          {id: 1, name : 'Alice'},
+          {id:2, name:'Bob'},
+          {id:3, name:'Charlie'},
+          {id: 4, name:'David'},
+          {id: 5, name: 'Eve'},
+        ];
+
+        await new Promise((resolve) => setTimeout(resolve, 500));
+        setParticipants(mockData);
+        //api 요청을 흉내내는 부분. 500ms 지연 후 저장
+      };
+      useEffect(() => {
+        fetchMockParticipants();
+      }, []);
+      
+      //DB에 저장하는 함수
+      const saveParticipantsToDB = (selectedParticipants) => {
+        fetch('/api/saveParticipants', {//fetch는 네트워크 요청 보낼 때 사용
+          method: 'POST', //서버에 데이터를 보내기 위해 포스트 요청
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({participants: selectedParticipants}),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log('DB 저장 성공:', data);
+          })
+          .catch((error) => {
+            console.error('DB 저장 실패:', error);
+          });
+      }
+
       return (
         <div>
           <header>
@@ -83,13 +119,14 @@ function MeetingLog() {
             {isRecording ? "녹음 중" : "녹음하기"}
           </button>
           <div>
-            <p>녹음본 텍스트</p>
-            {/*녹음본 텍스트랑 이용자가 직접 회의내용 입력하는 부분을 가로 배치하는 걸로 생각하고 있는데 어떻게 생각하는지? 
-            - 아니면 기록할 때는 이 부분은 안보이고 이후에 기록한 걸 확인하는 창에서는 가로 배치로 보이게끔?*/}
-            <textarea value={recordingText} readOnly />
-          </div>
-          <div>
             <h1>회의 제목</h1>
+            <div className="participants">
+              <h3>참여자</h3>
+              <ParticipantSelector
+                participants={participants.map((p) => p.name)}
+                onSave={saveParticipantsToDB}
+              />
+            </div>
             <p>직접 입력</p>
             <div>여기에 실시간 수정 api 받아오기</div>
           </div>
@@ -102,7 +139,6 @@ function MeetingLog() {
         </div>
 
         </div>
-        /*참여자 목록 작성하는거 이름 버튼 클릭하는 식? 노션과 같은 방식을 뭐라고 하지?*/
         
       );
     };

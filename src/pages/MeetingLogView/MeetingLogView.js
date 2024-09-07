@@ -4,6 +4,27 @@ import { useParams } from "react-router-dom";
 const MeetingLogView = () => {
   const { date } = useParams(); // URL에서 날짜를 가져옵니다.
   const [meetingLog, setMeetingLog] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
+
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+  };
+
+  const handleSave = () => {
+    setIsEditing(false);
+  };
+
+  const handleEdit = () => {
+    setIsEditing(true);
+  };
+
+  const handleDelete = () => {
+    setIsDeleted(true);
+  };
+
+  if (isDeleted) {
+    return <div>Post has been deleted.</div>;
+  };
 
   useEffect(() => {
     // 해당 날짜의 회의록 데이터를 가져오는 함수
@@ -21,29 +42,67 @@ const MeetingLogView = () => {
   }, [date]);
 
   if (!meetingLog) {
-    return <div>Loading...</div>;
+    return <div>
+      <h2>회의 제목 오는 자리</h2>
+      <p><strong>회의 날짜 표시</strong></p>
+      <p><strong>회의 참여자 표시</strong></p>
+      <div>
+        <strong>녹음본 텍스트 변환</strong>
+      </div>
+      <div><strong>회의 내용</strong>
+      <p>내용 표시</p></div>
+      <button>수정</button>
+    </div>;
   }
 
   return (
-    <div>
-      <h2>{meetingLog.title}</h2>
-      <p><strong>회의 날짜:</strong> {meetingLog.date}</p>
-      <p><strong>회의 참여자:</strong> {meetingLog.participants.join(", ")}</p>
-      <div>
-        <strong>녹음본:</strong>
-        <ul>
-          {meetingLog.recordings.map((recording, index) => (
-            <li key={index}>
-              <a href={recording.url} download>{recording.filename}</a>
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div>
-        <strong>회의 내용:</strong>
-        <p>{meetingLog.content}</p>
+    <div className="container">
+      <div editable-post>
+        {isEditing ? (
+          <div className="edit">
+            <h1>회의 제목</h1>
+            <div className="participants">
+              <h3>참여자</h3>
+              <ParticipantSelector
+                participants={participants.map((p) => p.name)}
+                onSave={saveParticipantsToDB}
+              />
+              <p>직접 입력</p>
+              <div>여기에 실시간 수정 api 받아오기</div>
+              <div>
+                {recordedFiles.map((file, index) => (
+                  <div key={index}>{file}</div>
+                ))}
+              </div>
+            </div>
+            <button className="end-button" onClick={handleEndButtonClick}>작성 완료</button>
+          </div>
+        ) : (
+          <div className = "view-meetinglog">
+            <h2>{meetingLog.title}</h2>
+            <p><strong>회의 날짜:</strong> {meetingLog.date}</p>
+            <p><strong>회의 참여자:</strong> {meetingLog.participants.join(", ")}</p>
+            <strong>회의 녹음 내용:</strong>
+            <div>
+              <ul>
+                {meetingLog.recordings.map((recording, index) => (
+                  <li key={index}>
+                    <a href={recording.url} download>{recording.filename}</a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <strong>회의 내용:</strong>
+              <p>{meetingLog.content}</p>
+            </div>
+          </div>
+
+        )}
+          
       </div>
     </div>
+    
   );
 };
 
