@@ -2,13 +2,12 @@
     display: flex;
     align-items: center;
     margin-right: 1em;
-}
-
-.login-signup a, .my-page-logout a {
     color: rgb(255, 255, 255);
     text-decoration: none;
     margin: 0 10px;
- }
+}
+
+
   
 .sidebar-toggle {
     position: fixed;
@@ -73,4 +72,8 @@ button {
     border-radius: var(--button-border-radius);
     border: none;
     cursor: pointer;
+}
+
+.textarea {
+    background-color: var(--background-color);
 }
