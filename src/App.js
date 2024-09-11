@@ -13,6 +13,7 @@ import MyPage from './components/MyPage/MyPage';
 import Schedule from './components/schedule/schedule';
 import './App.css';
 import ParticipantSelector from './components/ParticipantSelector/ParticipantSelector';
+import './style/variables.css';
 
 
 function App() {
