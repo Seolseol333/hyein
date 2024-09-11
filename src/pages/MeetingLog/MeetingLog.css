@@ -1,6 +1,33 @@
 .MeetingLog {
-    margin: 0;
-    font-family: Arial, sans-serif;}
+    margin: auto;
+    font-family: Arial, sans-serif;
+    display: grid;
+    place-items: center;
+    height: 100vh;    
+}
 
+.record-button {
+    align-items: center;
+}
+
+.meeting-contents {
+    align-items: center;
+}
+
+.h1 {
+    text-align: center;
+}
+
+.participants {
+    align-items: center;
+}
+
+.p {
+    text-align: center;
+}
+
+.end-button {
+    align-items: center;
+}
     
     

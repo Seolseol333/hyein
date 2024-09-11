@@ -145,7 +145,7 @@ function MeetingLog() {
       };
 
       return (
-        <div className ="MeetingLog">
+        <div>
           <header>
             <div className="my-page-logout">
             <IoPerson size={24} />
@@ -168,7 +168,7 @@ function MeetingLog() {
             내용 작성 시 회의 제목, 참여자, (날짜는 달력에서 클릭했던 날짜로), 사진 첨부 등이 가능하게?, 요약본에는 그 글 앞에 점 찍혀있는 그거 만들어주기
             작성 완료 버튼
             내용 작성 부분은 백 쪽 api 불러올 걸 고려해서 코드 작성*/}
-        <div>
+        <div className ="MeetingLog">
           <button className="record-button" onClick={handleRecordButtonClick}>
             {isRecording ? (
               <IoRecordingOutline size={24} />
@@ -177,10 +177,9 @@ function MeetingLog() {
             )}
             {isRecording ? "녹음 중" : "녹음하기"}
           </button>
-          <div>
+          <div className="meeting-contents">
             <h1>회의 제목</h1>
             <div className= "participants">
-              <h3>참여자</h3>
               <ParticipantSelector
                 participants={participants}
                 onSave={saveParticipantsToDB}

@@ -12,7 +12,7 @@ import ProjectDetail from './pages/project/project';
 import MyPage from './components/MyPage/MyPage';
 import Schedule from './components/schedule/schedule';
 import './App.css';
-import ParticipantSelector from './components/ParticipantSelector/ParticipantSelector';
+
 import './style/variables.css';
 
 
@@ -40,7 +40,6 @@ function App() {
           <Route path="/project-detail" element={<ProjectDetail />} />
           <Route path="/MeetingLog" element={<MeetingLog />} />
           <Route path="/MeetingLogView" element={<MeetingLogView/>}/>
-          <Route path="/ParticipantSelector" element={<ParticipantSelector/>}/>
         </Routes>
       </div>
     </Router>

@@ -3,10 +3,9 @@
     --footer-height: 150px;
     --sidebar-width: 250px;
 
-    --default-padding: 12px;
-    --default-margin: 16px;
+    --default-padding: 8px;
+    --default-margin: 1em;
     --button-border-radius: 5px;
-    --button-height: 20%;
     
 
     --form-height: 20px;
@@ -85,7 +84,6 @@ button {
     border-radius: var(--button-border-radius);
     border: none;
     cursor: pointer;
-    height: var(--button-height);
 }
 
 button:hover {
@@ -175,7 +173,7 @@ button:disabled {
     position: fixed;
     top: 1em;
     left: 1em;
-    z-index: 998;
+    z-index: 1001;
     background: none;
     border: none;
     color: rgb(0, 0, 0);
