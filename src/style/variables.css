@@ -7,7 +7,7 @@
     --default-margin: 16px;
     --button-border-radius: 5px;
     --button-height: 20%;
-    --button-width: 100%;
+    
 
     --form-height: 20px;
     --form-width: 360px;
@@ -86,7 +86,6 @@ button {
     border: none;
     cursor: pointer;
     height: var(--button-height);
-    width: var(--button-width);
 }
 
 button:hover {
