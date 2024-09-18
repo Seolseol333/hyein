@@ -22,20 +22,27 @@
 
 .participants {
     display: flex;
-    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: auto;
 
 }
 
-.choose {
-    align-items: center;
+.choose, .dicided {
     display: grid;
     place-items: center;
+    margin: 0 1em;
 }
 
-.dicided {
-    align-items: center;
-    display:grid;
-    place-items: center;
+.par {
+    margin: 0;
+}
+
+.delete {
+    padding: 0.1em;
+    color: #A32125;
+    background-color: white;
+    text-decoration: underline;
 }
 
 .p {

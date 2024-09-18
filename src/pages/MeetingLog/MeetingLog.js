@@ -27,9 +27,9 @@ function ParticipantSelector ({ participants}) {
   
 
   return (
-    <div classNmae = "participants">
+    <div className = "participants" >
       <div className = "choose">
-        <h3>참여자 선택</h3>
+        <h4>참여자 선택</h4>
         <select onChange={handleSelectParticipant} defaultValue="">
           <option value="" disabled>
             참여자 선택
@@ -43,11 +43,11 @@ function ParticipantSelector ({ participants}) {
       </div>
       <div className = "dicided">
         <h4>선택된 참여자</h4>
-        <ul>
+        <ul className="par">
           {selectedParticipants.map((name) => (
             <li key={name}>
               {name}{' '}
-              <button onClick={() => handleRemoveParticipant(name)}>
+              <button className = "delete" onClick={() => handleRemoveParticipant(name)}>
                 삭제
               </button>
             </li>
@@ -59,6 +59,7 @@ function ParticipantSelector ({ participants}) {
   );
 }
 
+/*api의 css 수정 가능한 정도를 보고 회의제목 입력 받는 코드를 넣을지 말지 결정하기*/
 
 
 function MeetingLog({onSave}) {
