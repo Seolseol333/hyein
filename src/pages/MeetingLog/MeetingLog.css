@@ -12,6 +12,8 @@
 
 .meeting-contents {
     align-items: center;
+    display: grid;
+    place-items: center;
 }
 
 .h1 {
@@ -19,7 +21,21 @@
 }
 
 .participants {
+    display: flex;
+    flex-direction: row;
+
+}
+
+.choose {
     align-items: center;
+    display: grid;
+    place-items: center;
+}
+
+.dicided {
+    align-items: center;
+    display:grid;
+    place-items: center;
 }
 
 .p {
