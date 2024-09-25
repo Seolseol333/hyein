@@ -77,6 +77,10 @@ function MeetingLog({onSave}) {
       const [participants, setParticipants] = useState([]);
       const navigate = useNavigate();
       const [selectedParticipants, setSelectedParticipants] = useState([]);
+      const [realTimeData, setRealTimeData] = useState('');
+      const [realTimeText, setRealTimeText] = useState('');
+      const [meetingTitle, setMeetingTitle] = useState('');
+    
 
       const handleRecordButtonClick = async () => {
         
@@ -109,6 +113,16 @@ function MeetingLog({onSave}) {
         window.location.href = '/schedule';
       };
 
+      const fetchRealTimeData = async () => {
+        try{
+          const response = await fetch("실시간 편집 api 엔드포인트");
+          const realTimeData = await response.json();
+          setRealTimeData(realTimeData);
+        } catch (error) {
+          console.error('실시간 데이터 불러오기 실패:',error);
+        }
+      };
+
       const fetchMockParticipants = async () => {
         const mockData = [
           {id: 1, name : 'Alice'},
@@ -124,6 +138,10 @@ function MeetingLog({onSave}) {
       };
       useEffect(() => {
         fetchMockParticipants();
+        fetchRealTimeData();
+
+        const intervalId = setInterval (fetchRealTimeData, 5000);
+        return () => clearInterval(intervalId);
       }, []);
       
       //DB에 저장하는 함수
@@ -148,6 +166,7 @@ function MeetingLog({onSave}) {
       const handleSubmitToDB = () => {
         onSave(selectedParticipants); // 상위 컴포넌트에서 전달된 함수 호출
       };
+
 
       return (
         <div>
@@ -183,15 +202,23 @@ function MeetingLog({onSave}) {
             {isRecording ? "녹음 중" : "녹음하기"}
           </button>
           <div className="meeting-contents">
-            <h1>회의 제목</h1>
+            <input  className ="titleinput" type="text"
+            value={meetingTitle}
+            onChange={(e) => setMeetingTitle(e.target.value)}
+            placeholder="회의 제목을 입력하세요"
+            />
             <div>
               <ParticipantSelector
                 participants={participants}
                 onSave={saveParticipantsToDB}
               />
             </div>
-            <p>직접 입력</p>
-            <div>여기에 실시간 수정 api 받아오기</div>
+            <div>{realTimeData}</div>
+            <textarea 
+              value={realTimeText}
+              onChange={(e) => setRealTimeText(e.target.value)}
+              placeholder = "회의 내용을 입력하세요"
+              />
           </div>
           <div>
             {recordedFiles.map((file, index) => (

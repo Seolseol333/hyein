@@ -1,10 +1,31 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
+const ParticipantSelector = ({participants, onSave}) => {
+  return (
+    <div>
+      <select>
+        {participants.map((participant, index) => (
+          <option key={index} value={participant}>
+            {participant}
+          </option>
+        ))}
+      </select>
+      <button onClick={onSave}>저장</button>
+    </div>
+  );
+};
+
 const MeetingLogView = () => {
   const { date } = useParams(); // URL에서 날짜를 가져옵니다.
   const [meetingLog, setMeetingLog] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
+  const [isDeleted, setIsDeleted] = useState(false);
+  const [recordedFiles, setRecoredeFiles] = useState([]);
+  const [file, setFile] = useState(null);
+  const handleEndButtonClick = () => {
+    console.log('작성 완료');
+  };
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
@@ -38,11 +59,17 @@ const MeetingLogView = () => {
       }
     };
 
-    fetchMeetingLog();
-  }, [date]);
+    if(!meetingLog) {
+      fetchMeetingLog();
+    }
+  }, [date, meetingLog]);
+
+  if(isDeleted) {
+    return <div>Post has been deleted.</div>;
+  }
 
   if (!meetingLog) {
-    return <div>
+    return (<div>
       <h2>회의 제목 오는 자리</h2>
       <p><strong>회의 날짜 표시</strong></p>
       <p><strong>회의 참여자 표시</strong></p>
@@ -52,8 +79,26 @@ const MeetingLogView = () => {
       <div><strong>회의 내용</strong>
       <p>내용 표시</p></div>
       <button>수정</button>
-    </div>;
-  }
+    </div>);
+  };
+
+  
+  const saveParticipantsToDB = (participants) => {
+    fetch("/api/saveParticipants", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({participants}),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('Participants saved:', data);
+      })
+      .catch((error) => {
+        console.error('Error saving participants:', error);
+      });
+  };
 
   return (
     <div className="container">
@@ -64,7 +109,7 @@ const MeetingLogView = () => {
             <div className="participants">
               <h3>참여자</h3>
               <ParticipantSelector
-                participants={participants.map((p) => p.name)}
+                participants={meetingLog.participants}
                 onSave={saveParticipantsToDB}
               />
               <p>직접 입력</p>
