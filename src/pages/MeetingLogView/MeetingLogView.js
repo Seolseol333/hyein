@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { IoMenu, IoAddCircle, IoPerson, IoBookmark } from "react-icons/io5";
+import './MeetingLogView.css';
 
-const ParticipantSelector = ({participants, onSave}) => {
+function ParticipantSelector({participants = [], onSave}) {
   return (
     <div>
       <select>
@@ -16,13 +18,25 @@ const ParticipantSelector = ({participants, onSave}) => {
   );
 };
 
-const MeetingLogView = () => {
+function MeetingLogView() {
   const { date } = useParams(); // URL에서 날짜를 가져옵니다.
-  const [meetingLog, setMeetingLog] = useState(null);
+  const [meetingLog, setMeetingLog] = useState({
+    title: "회의 제목 오는 자리",  // 초기값 설정
+    date: "오늘",                  // 초기값 설정
+    participants: [],               // 초기값 설정
+    recordings: [],                 // 초기값 설정
+    content: "회의 내용",   
+  });
   const [isEditing, setIsEditing] = useState(false);
   const [isDeleted, setIsDeleted] = useState(false);
-  const [recordedFiles, setRecoredeFiles] = useState([]);
+  const [recordedFiles, setRecordedFiles] = useState([]);
   const [file, setFile] = useState(null);
+
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen);
+};
+
   const handleEndButtonClick = () => {
     console.log('작성 완료');
   };
@@ -43,111 +57,85 @@ const MeetingLogView = () => {
     setIsDeleted(true);
   };
 
-  if (isDeleted) {
-    return <div>Post has been deleted.</div>;
-  };
 
   useEffect(() => {
+    console.log("useEffect 실행됨");
     // 해당 날짜의 회의록 데이터를 가져오는 함수
-    const fetchMeetingLog = async () => {
-      try {
-        const response = await fetch(`/api/meetingLog/${date}`);
-        const data = await response.json();
-        setMeetingLog(data);
-      } catch (error) {
-        console.error("Error fetching meeting log:", error);
-      }
-    };
+    
+  }, [date]);
 
-    if(!meetingLog) {
-      fetchMeetingLog();
-    }
-  }, [date, meetingLog]);
-
-  if(isDeleted) {
-    return <div>Post has been deleted.</div>;
+  if (isDeleted) {
+    return <div>회의록이 삭제되었습니다.</div>
   }
 
-  if (!meetingLog) {
-    return (<div>
-      <h2>회의 제목 오는 자리</h2>
-      <p><strong>회의 날짜 표시</strong></p>
-      <p><strong>회의 참여자 표시</strong></p>
-      <div>
-        <strong>녹음본 텍스트 변환</strong>
-      </div>
-      <div><strong>회의 내용</strong>
-      <p>내용 표시</p></div>
-      <button>수정</button>
-    </div>);
-  };
-
   
-  const saveParticipantsToDB = (participants) => {
-    fetch("/api/saveParticipants", {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({participants}),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log('Participants saved:', data);
-      })
-      .catch((error) => {
-        console.error('Error saving participants:', error);
-      });
-  };
 
   return (
-    <div className="container">
-      <div editable-post>
-        {isEditing ? (
-          <div className="edit">
-            <h1>회의 제목</h1>
-            <div className="participants">
-              <h3>참여자</h3>
-              <ParticipantSelector
-                participants={meetingLog.participants}
-                onSave={saveParticipantsToDB}
-              />
-              <p>직접 입력</p>
-              <div>여기에 실시간 수정 api 받아오기</div>
-              <div>
-                {recordedFiles.map((file, index) => (
-                  <div key={index}>{file}</div>
-                ))}
+    <div>
+      <header className="header">
+          <div className="my-page-logout">
+          <IoPerson size={24} />
+          <a href="/mypage">마이페이지</a> | <a href="/logout">로그아웃</a>
+          </div>
+      </header>
+      <button className="sidebar-toggle" onClick={toggleSidebar}>
+          <IoMenu size={24} />
+      </button>
+      <aside className={`App-sidebar ${sidebarOpen ? 'open' : ''}`}>
+          <div className="sidebar-content">
+              <p>aa</p>
+          </div>
+      </aside>
+      <div className="container">
+        <div editable-post>
+          {isEditing ? (
+            <div className="edit">
+              <h1>{meetingLog.title}</h1>
+              <div className="participants">
+                <h3>참여자</h3>
+                <ParticipantSelector
+                  participants={meetingLog.participants}
+                  onSave={handleSave}
+                />
+                <p>직접 입력</p>
+                <div>여기에 실시간 수정 api 받아오기</div>
+                <div>
+                  {recordedFiles.map((file, index) => (
+                    <div key={index}>{file}</div>
+                  ))}
+                </div>
               </div>
+              <button className="end-button" onClick={handleEndButtonClick}>작성 완료</button>
             </div>
-            <button className="end-button" onClick={handleEndButtonClick}>작성 완료</button>
-          </div>
-        ) : (
-          <div className = "view-meetinglog">
-            <h2>{meetingLog.title}</h2>
-            <p><strong>회의 날짜:</strong> {meetingLog.date}</p>
-            <p><strong>회의 참여자:</strong> {meetingLog.participants.join(", ")}</p>
-            <strong>회의 녹음 내용:</strong>
-            <div>
-              <ul>
-                {meetingLog.recordings.map((recording, index) => (
-                  <li key={index}>
-                    <a href={recording.url} download>{recording.filename}</a>
-                  </li>
-                ))}
-              </ul>
+          ) : (
+            <div className = "view-meetinglog">
+              <h2>{meetingLog.title}</h2>
+              <p><strong>회의 날짜:</strong> {meetingLog.date}</p>
+              <p><strong>회의 참여자:</strong> {meetingLog.participants.join(", ")}</p>
+              <strong>회의 녹음 내용:</strong>
+              <div>
+                <ul>
+                  {meetingLog.recordings.map((recording, index) => (
+                    <li key={index}>
+                      <a href={recording.url} download>{recording.filename}</a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <strong>회의 내용:</strong>
+                <p>{meetingLog.content}</p>
+              </div>
+              <button onClick={() => setIsEditing(true)}>수정</button>
+              <button onClick={handleDelete}>삭제</button>
+            
             </div>
-            <div>
-              <strong>회의 내용:</strong>
-              <p>{meetingLog.content}</p>
-            </div>
-          </div>
 
-        )}
-          
+          )}
+            
+        </div>
       </div>
     </div>
-    
   );
 };
 
