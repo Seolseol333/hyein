@@ -13,7 +13,6 @@ function ParticipantSelector({participants = [], onSave}) {
           </option>
         ))}
       </select>
-      <button onClick={onSave}>저장</button>
     </div>
   );
 };
@@ -46,7 +45,29 @@ function MeetingLogView() {
   };
 
   const handleSave = () => {
-    setIsEditing(false);
+    const updatedMeetingLog = {
+      title: meettingLog.title,
+      date: meetingLog.date,
+      participants: meetingLog.participants,
+      recordings:recordedFiles,
+      content: meetingLog.content,
+    };
+
+    fetch('/api/meetinglog', {
+      method:'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body:JSON.stringify(updatedMeetingLog),
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log("저장 완료:", data);
+        setIsEditing(false);
+      })
+      .catch(error => {
+        console.error("저장 중 에러 발생:", error);
+      });  
   };
 
   const handleEdit = () => {
@@ -91,21 +112,21 @@ function MeetingLogView() {
           {isEditing ? (
             <div className="edit">
               <h1>{meetingLog.title}</h1>
-              <div className="participants">
-                <h3>참여자</h3>
+              <div className="participants-group">
+                <h4>참여자</h4>
                 <ParticipantSelector
                   participants={meetingLog.participants}
                   onSave={handleSave}
                 />
-                <p>직접 입력</p>
-                <div>여기에 실시간 수정 api 받아오기</div>
-                <div>
-                  {recordedFiles.map((file, index) => (
-                    <div key={index}>{file}</div>
-                  ))}
-                </div>
               </div>
-              <button className="end-button" onClick={handleEndButtonClick}>작성 완료</button>
+              <p>직접 입력</p>
+              <div>여기에 실시간 수정 api 받아오기</div>
+              <div>
+                {recordedFiles.map((file, index) => (
+                  <div key={index}>{file}</div>
+                ))}
+              </div>
+              <button className="end-button" onClick={handleSave}>저장</button>
             </div>
           ) : (
             <div className = "view-meetinglog">

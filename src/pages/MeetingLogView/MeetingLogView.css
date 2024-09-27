@@ -130,3 +130,15 @@ body {
         padding: 5px 10px;
         margin-right: auto;
     }
+
+    .participants-group {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: auto;
+    }
+
+    .view-meeinglog {
+        display: flex;
+        margin: auto;
+    }
