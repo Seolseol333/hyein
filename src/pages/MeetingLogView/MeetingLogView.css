@@ -81,6 +81,11 @@ body {
         cursor: pointer;
     }
 
+    .end-button {
+        justify-content: center;
+        display: grid;
+    }
+
     .editable-post {
         background-color: #f0f0f0;
         border: 1px solid #ccc;
@@ -132,10 +137,9 @@ body {
     }
 
     .participants-group {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: auto;
+        display: grid;
+        place-items: center;
+        margin: 0 1em;
     }
 
     .view-meeinglog {

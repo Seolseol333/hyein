@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { IoMenu, IoAddCircle, IoPerson, IoBookmark } from "react-icons/io5";
+import { useParams, useNavigate } from "react-router-dom";
+import { IoMenu, IoPerson} from "react-icons/io5";
 import './MeetingLogView.css';
 
-function ParticipantSelector({participants = [], onSave}) {
+function ParticipantSelector({participants = [], selectedParticipants, onParticipantChange}) {
   return (
     <div>
-      <select>
+      <select multiple value={selectedParticipants} onChange={(e) => {
+        const selectedOptions = Array.from(e.target.selectedOptions).map(option => option.value);
+        onParticipantChange(selectedOptions);
+      }}>
         {participants.map((participant, index) => (
           <option key={index} value={participant}>
             {participant}
@@ -19,6 +22,7 @@ function ParticipantSelector({participants = [], onSave}) {
 
 function MeetingLogView() {
   const { date } = useParams(); // URL에서 날짜를 가져옵니다.
+  const navigate = useNavigate();
   const [meetingLog, setMeetingLog] = useState({
     title: "회의 제목 오는 자리",  // 초기값 설정
     date: "오늘",                  // 초기값 설정
@@ -26,33 +30,27 @@ function MeetingLogView() {
     recordings: [],                 // 초기값 설정
     content: "회의 내용",   
   });
+  const [selectedParticipants, setSelectedParticipants] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
   const [isDeleted, setIsDeleted] = useState(false);
   const [recordedFiles, setRecordedFiles] = useState([]);
-  const [file, setFile] = useState(null);
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
 };
 
-  const handleEndButtonClick = () => {
-    console.log('작성 완료');
-  };
-
-  const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
-  };
-
   const handleSave = () => {
     const updatedMeetingLog = {
-      title: meettingLog.title,
+      title: meetingLog.title,
       date: meetingLog.date,
-      participants: meetingLog.participants,
+      participants: selectedParticipants,
       recordings:recordedFiles,
       content: meetingLog.content,
     };
 
+    console.log("저장 전 meetingLog 상태:", meetingLog);
+    /*
     fetch('/api/meetinglog', {
       method:'POST',
       headers: {
@@ -63,34 +61,48 @@ function MeetingLogView() {
       .then(response => response.json())
       .then(data => {
         console.log("저장 완료:", data);
+        setMeetingLog(updatedMeetingLog);
+        console.log("업데이트된 meetingLog 상태:", updatedMeetingLog);
         setIsEditing(false);
+        console.log("isEditing 상태:", false);
       })
       .catch(error => {
         console.error("저장 중 에러 발생:", error);
       });  
+    */
+    //임시로 상태만 업데이트
+    setMeetingLog(updatedMeetingLog);
+    setIsEditing(false);
+    console.log("isEditing 상태:", false)
   };
 
-  const handleEdit = () => {
-    setIsEditing(true);
+  const handleParticipantChange = (selectedOptions) => {
+    setSelectedParticipants(selectedOptions);
   };
 
   const handleDelete = () => {
-    setIsDeleted(true);
-  };
+    const confirmed = window.confirm("회의록을 삭제하시겠습니까?");
+
+    if (confirmed) {
+      navigate('/schedule');
+    }
+  }
 
 
   useEffect(() => {
     console.log("useEffect 실행됨");
     // 해당 날짜의 회의록 데이터를 가져오는 함수
+    fetch(`/api/meetinglog/${date}`)
+      .then(response => response.json())
+      .then(data => {
+        setMeetingLog(data);
+        setSelectedParticipants(data.participants);
+      })
+      .catch(error => console.error("데이터 가져오기 중 에러:", error));
     
   }, [date]);
 
-  if (isDeleted) {
-    return <div>회의록이 삭제되었습니다.</div>
-  }
-
   
-
   return (
     <div>
       <header className="header">
@@ -108,7 +120,7 @@ function MeetingLogView() {
           </div>
       </aside>
       <div className="container">
-        <div editable-post>
+        <div className="editable-post">
           {isEditing ? (
             <div className="edit">
               <h1>{meetingLog.title}</h1>
@@ -116,7 +128,8 @@ function MeetingLogView() {
                 <h4>참여자</h4>
                 <ParticipantSelector
                   participants={meetingLog.participants}
-                  onSave={handleSave}
+                  selectedParticipants={selectedParticipants}
+                  onParticipantChange={handleParticipantChange}
                 />
               </div>
               <p>직접 입력</p>
