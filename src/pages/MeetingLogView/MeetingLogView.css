@@ -79,11 +79,11 @@ body {
         border-radius: var(--button-border-radius);
         border: none;
         cursor: pointer;
+        margin-top: 3em;
     }
 
     .end-button {
-        justify-content: center;
-        display: grid;
+        margin-top: 3em;
     }
 
     .editable-post {
@@ -99,7 +99,7 @@ body {
         flex-direction: column;
         justify-content:flex-start;
         align-items: center;
-        margin-top: 100px;
+        margin-top: 30px;
         display: flex;
     }
 
@@ -139,10 +139,25 @@ body {
     .participants-group {
         display: grid;
         place-items: center;
-        margin: 0 1em;
+        margin: 1em;
     }
+
 
     .view-meeinglog {
         display: flex;
         margin: auto;
+    }
+
+    .what-contents {
+        display: flex;
+        justify-content: space-between;
+
+    }
+
+    .contents-title {
+        width: 100px;
+    }
+
+    .contents-con {
+        margin: 0;
     }

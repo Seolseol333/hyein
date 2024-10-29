@@ -132,7 +132,6 @@ function MeetingLogView() {
                   onParticipantChange={handleParticipantChange}
                 />
               </div>
-              <p>직접 입력</p>
               <div>여기에 실시간 수정 api 받아오기</div>
               <div>
                 {recordedFiles.map((file, index) => (
@@ -146,7 +145,7 @@ function MeetingLogView() {
               <h2>{meetingLog.title}</h2>
               <p><strong>회의 날짜:</strong> {meetingLog.date}</p>
               <p><strong>회의 참여자:</strong> {meetingLog.participants.join(", ")}</p>
-              <strong>회의 녹음 내용:</strong>
+              <p><strong>회의 녹음 내용:</strong>{/* 여기에 녹음 파일 불러오는 코드 써야함*/}</p>
               <div>
                 <ul>
                   {meetingLog.recordings.map((recording, index) => (
@@ -156,9 +155,8 @@ function MeetingLogView() {
                   ))}
                 </ul>
               </div>
-              <div>
-                <strong>회의 내용:</strong>
-                <p>{meetingLog.content}</p>
+              <div className = "what-contents">
+                <p><strong className = "contents-title">회의 내용:</strong> {meetingLog.content} </p>
               </div>
               <button onClick={() => setIsEditing(true)}>수정</button>
               <button onClick={handleDelete}>삭제</button>
